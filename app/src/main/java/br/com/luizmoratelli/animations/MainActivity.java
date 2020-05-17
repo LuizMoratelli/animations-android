@@ -2,6 +2,7 @@ package br.com.luizmoratelli.animations;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.graphics.drawable.AnimationDrawable;
@@ -10,6 +11,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private AnimationDrawable animationDrawable;
@@ -42,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         Button buttonShow = findViewById(R.id.button_show);
         Button buttonMoveLeft = findViewById(R.id.button_move);
         Button buttonMoveRight = findViewById(R.id.button_move2);
+        Button buttonRotation = findViewById(R.id.button_rotation);
 
         buttonHide.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 animatorSet.start();
             }
         });
+
         buttonMoveRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,6 +93,20 @@ public class MainActivity extends AppCompatActivity {
                 animatorSet.play(animatorRight).before(animatorLeft);
                 animatorSet.play(animatorLeft).before(animatorCenter);
                 animatorSet.setDuration(500);
+                animatorSet.start();
+            }
+        });
+
+        buttonRotation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArrayList<Animator> animators = new ArrayList<Animator>();
+                ObjectAnimator animatorRotationRight = ObjectAnimator.ofFloat(imgView, "rotation", 30);
+                ObjectAnimator animatorRotationLeft = ObjectAnimator.ofFloat(imgView, "rotation", -30);
+                ObjectAnimator animatorRotationZero = ObjectAnimator.ofFloat(imgView, "rotation", 0);
+                AnimatorSet animatorSet = new AnimatorSet();
+                animatorSet.setDuration(400);
+                animatorSet.playSequentially(animatorRotationRight, animatorRotationLeft, animatorRotationZero);
                 animatorSet.start();
             }
         });
