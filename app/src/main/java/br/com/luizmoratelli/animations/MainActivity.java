@@ -2,6 +2,7 @@ package br.com.luizmoratelli.animations;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
@@ -65,19 +66,29 @@ public class MainActivity extends AppCompatActivity {
         buttonMoveLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ObjectAnimator animator = ObjectAnimator.ofFloat(imgView,
+                ObjectAnimator animatorLeft = ObjectAnimator.ofFloat(imgView,
                         "translationX", -400);
-                animator.setDuration(2000);
-                animator.start();
+                ObjectAnimator animatorRight = ObjectAnimator.ofFloat(imgView, "translationX", 400);
+                ObjectAnimator animatorCenter = ObjectAnimator.ofFloat(imgView, "translationX", 0);
+                AnimatorSet animatorSet = new AnimatorSet();
+                animatorSet.play(animatorLeft).before(animatorRight);
+                animatorSet.play(animatorRight).before(animatorCenter);
+                animatorSet.setDuration(500);
+                animatorSet.start();
             }
         });
         buttonMoveRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ObjectAnimator animator = ObjectAnimator.ofFloat(imgView,
-                        "translationX", 400);
-                animator.setDuration(2000);
-                animator.start();
+                ObjectAnimator animatorLeft = ObjectAnimator.ofFloat(imgView,
+                        "translationX", -400);
+                ObjectAnimator animatorRight = ObjectAnimator.ofFloat(imgView, "translationX", 400);
+                ObjectAnimator animatorCenter = ObjectAnimator.ofFloat(imgView, "translationX", 0);
+                AnimatorSet animatorSet = new AnimatorSet();
+                animatorSet.play(animatorRight).before(animatorLeft);
+                animatorSet.play(animatorLeft).before(animatorCenter);
+                animatorSet.setDuration(500);
+                animatorSet.start();
             }
         });
     }
