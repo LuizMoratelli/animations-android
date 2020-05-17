@@ -6,11 +6,7 @@
         android:duration="2000"
         />
     <item
-        android:drawable="@drawable/pokeball"
-        android:duration="2000"
-        />
-    <item
-        android:drawable="@drawable/pokeball"
+        android:drawable="@drawable/bulbassaur"
         android:duration="2000"
         />
 </animation-list>
