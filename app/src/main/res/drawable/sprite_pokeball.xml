@@ -3,10 +3,10 @@
     android:oneshot="false">
     <item
         android:drawable="@drawable/pokeball"
-        android:duration="2000"
+        android:duration="500"
         />
     <item
         android:drawable="@drawable/bulbassaur"
-        android:duration="2000"
+        android:duration="500"
         />
 </animation-list>

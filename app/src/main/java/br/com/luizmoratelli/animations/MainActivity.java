@@ -5,16 +5,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.Context;
+import android.graphics.Interpolator;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.BounceInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Animation.AnimationListener {
     private AnimationDrawable animationDrawable;
     private ImageView imgView;
 
@@ -37,15 +42,27 @@ public class MainActivity extends AppCompatActivity {
         });
 
         animationDrawable = (AnimationDrawable) imgView.getBackground();
-        onLoadAddListeners();
+        onLoadAddListeners(this);
     }
 
-    private void onLoadAddListeners() {
+    private void onClickScaleButton() {
+        Animation animation = AnimationUtils.loadAnimation(this,
+                R.anim.scale);
+        animation.setAnimationListener(this);
+
+        imgView.requestLayout();
+        imgView.setAnimation(animation);
+
+        animation.start();
+    }
+
+    private void onLoadAddListeners(final Context context) {
         Button buttonHide = findViewById(R.id.button_hide);
         Button buttonShow = findViewById(R.id.button_show);
         Button buttonMoveLeft = findViewById(R.id.button_move);
         Button buttonMoveRight = findViewById(R.id.button_move2);
         Button buttonRotation = findViewById(R.id.button_rotation);
+        Button buttonScale = findViewById(R.id.button_scale);
 
         buttonHide.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,12 +127,27 @@ public class MainActivity extends AppCompatActivity {
                 animatorSet.start();
             }
         });
+
+        buttonScale.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickScaleButton();
+            }
+        });
     }
 
     @Override
-    public void finish() {
-        super.finish();
-        overridePendingTransition(R.anim.slide_in_right,
-                R.anim.slide_out_right);
+    public void onAnimationStart(Animation animation) {
+
+    }
+
+    @Override
+    public void onAnimationEnd(Animation animation) {
+
+    }
+
+    @Override
+    public void onAnimationRepeat(Animation animation) {
+
     }
 }
